@@ -25,15 +25,15 @@ class MarketMaker(ABC):
     if x_data["name"] == type_token_sell:
       namesData = {
         'type_token_buy': y_data["name"],
-        'initial_amount_sell': x_data["balance"],
-        'initial_amount_buy': y_data["balance"],
+        'initial_amount_sell': float(x_data["balance"]),
+        'initial_amount_buy': float(y_data["balance"]),
       }
       return namesData
     else:
       namesData = {
         'type_token_buy': x_data["name"],
-        'initial_amount_sell': y_data["balance"],
-        'initial_amount_buy': x_data["balance"],
+        'initial_amount_sell': float(y_data["balance"]),
+        'initial_amount_buy': float(x_data["balance"]),
       }
       return namesData
 
@@ -222,3 +222,6 @@ class StableSwap(MarketMaker):
     }
 
     return transaction
+
+  def calculate_price_impact(self,initial_spot_price, final_spot_price):
+    return ((initial_spot_price-final_spot_price)/initial_spot_price)*100
